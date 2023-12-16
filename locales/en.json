@@ -1,0 +1,17 @@
+{
+  "appbar": {
+    "title": "gazprom blin"
+  },
+  "login": {
+    "title": "Login",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "error": "Invalid username or password"
+  },
+  "survey_session": {
+    "single_choice": "Choose one of the following",
+    "multiple_choice": "Choose one or more of the following",
+    "text": "Enter your answer"
+  }
+}

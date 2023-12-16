@@ -1,0 +1,26 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "generate:api": "openapi --input http://localhost:5265/swagger/1.0/swagger.json --output api/_generated --useOptions --name ApiClient"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/i18n": "^8.0.0-rc.11",
+    "@pinia/nuxt": "^0.5.1",
+    "nuxt": "^3.8.2",
+    "openapi-typescript-codegen": "^0.25.0",
+    "vue": "^3.3.10",
+    "vue-router": "^4.2.5",
+    "vuetify-nuxt-module": "^0.7.3"
+  },
+  "dependencies": {
+    "pinia-plugin-persistedstate": "^3.2.0"
+  }
+}
