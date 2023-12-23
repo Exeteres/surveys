@@ -1,9 +1,9 @@
 import { parseJwt } from "~/utils/jwt"
-import { api } from "~/api"
+import { useApi } from "~/api"
 
 const enum UserRole {
-  Admin = "admin",
-  User = "user",
+  Admin = "Admin",
+  User = "User",
 }
 
 interface AccessTokenPayload {
@@ -59,49 +59,63 @@ export const useAuthStore = defineStore("auth", () => {
       return false
     }
 
-    return user.value.name === "admin"
+    return user.value.role === UserRole.Admin
   })
 
   const isAccessTokenExpired = computed(() => {
     if (!accessTokenPayload.value) {
-      return true
+      return false
     }
 
     return accessTokenPayload.value.exp < Date.now() / 1000
   })
 
-  const login = async (username: string, password: string): Promise<boolean> => {
+  const router = useRouter()
+  const api = useApi()
+
+  const login = async (username: string, password: string): Promise<void> => {
     try {
-      const { access, refresh } = await api.token.postApiToken({
-        version: "1.0",
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = await api.auth.login({
         requestBody: {
           login: username,
           password,
         },
       })
 
-      accessToken.value = access
-      refreshToken.value = refresh
+      accessToken.value = newAccessToken!
+      refreshToken.value = newRefreshToken!
 
-      console.log(access, refresh)
-
-      return true
+      await router.push({ name: "index" })
     } catch (e) {
-      return false
+      console.error("Failed to login", e)
     }
   }
 
   const refresh = async () => {
-    const response = await api.token.postApiTokenRefresh({
-      version: "1.0",
-      requestBody: {
-        refresh: refreshToken.value,
-      },
-    })
+    try {
 
-    const { accessToken: newAccessToken } = await response.json()
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = await api.auth.refresh({
+        requestBody: {
+          accessToken: accessToken.value,
+          refreshToken: refreshToken.value,
+        },
+      })
 
-    accessToken.value = newAccessToken
+      accessToken.value = newAccessToken!
+      refreshToken.value = newRefreshToken!
+    } catch (e) {
+      void logout()
+
+      console.error("Failed to refresh token", e)
+      throw new Error("Failed to refresh token")
+    }
+  }
+
+  const logout = async () => {
+    accessToken.value = null
+    refreshToken.value = null
+
+    await router.push({ name: "login" })
   }
 
   return {
@@ -111,7 +125,12 @@ export const useAuthStore = defineStore("auth", () => {
     login,
     refresh,
     isAccessTokenExpired,
+    logout,
+    accessToken,
+    refreshToken,
   }
 }, {
-  persist: true,
+  persist: {
+    paths: ["accessToken", "refreshToken"],
+  },
 })

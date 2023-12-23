@@ -1,20 +1,15 @@
 <template>
-  <v-menu offset-y>
-    <template v-slot:activator="{ on }">
+  <v-menu offset-y open-on-hover>
+    <template v-slot:activator="{ props }">
       <div v-if="authStore.isAuthenticated" class="text-overline">{{ authStore.user.name }}</div>
 
-      <v-btn icon v-on="on">
+      <v-btn icon v-bind="props">
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </template>
 
     <v-list>
-      <v-list-item>
-        <v-list-item-title>{{ $t("appbar.login") }}</v-list-item-title>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-title>{{ $t("appbar.logout") }}</v-list-item-title>
-      </v-list-item>
+      <v-list-item link :title="$t('appbar.logout')" @click="authStore.logout()" />
     </v-list>
   </v-menu>
 </template>

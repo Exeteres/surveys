@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type PostUserAnswer = {
+export type SubmitQuestionAnswerWriteModel = {
     answers?: Array<string> | null;
     text?: string | null;
 };

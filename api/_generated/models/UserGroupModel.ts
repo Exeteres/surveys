@@ -5,7 +5,7 @@
 
 import type { UserModel } from './UserModel';
 
-export type GroupModel = {
+export type UserGroupModel = {
     title?: string | null;
     users?: Array<UserModel> | null;
 };

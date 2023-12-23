@@ -1,6 +1,6 @@
 <template>
-  <div v-for="answer in question.answers" :key="answer.id" class="d-flex align-start">
-    <v-radio :value="answer.id" disabled style="margin-left: -4px" />
+  <div v-for="answer in question.answers" :key="answer.id" class="d-flex">
+    <v-checkbox :value="answer.id" disabled density="compact" class="mr-2" />
 
     <v-text-field
       :model-value="answer.text"

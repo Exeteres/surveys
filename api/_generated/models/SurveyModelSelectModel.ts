@@ -6,7 +6,7 @@
 import type { SurveyModel } from './SurveyModel';
 
 export type SurveyModelSelectModel = {
-    data?: Array<SurveyModel> | null;
-    more?: boolean;
+    items?: Array<SurveyModel> | null;
+    totalCount?: number;
 };
 

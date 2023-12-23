@@ -3,8 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type PostGroupModel = {
+export type SurveyWriteModel = {
     title: string;
-    users?: Array<string> | null;
+    jsonContent?: string | null;
+    fileId?: string | null;
 };
 

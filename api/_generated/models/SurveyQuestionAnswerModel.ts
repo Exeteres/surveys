@@ -3,8 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type TokenModel = {
-    accessToken?: string | null;
-    refreshToken?: string | null;
+export type SurveyQuestionAnswerModel = {
+    id?: string;
+    text?: string | null;
 };
 

@@ -2,10 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PostQuestionModel } from '../models/PostQuestionModel';
-import type { PostSurveyModel } from '../models/PostSurveyModel';
 import type { SurveyModel } from '../models/SurveyModel';
 import type { SurveyModelSelectModel } from '../models/SurveyModelSelectModel';
+import type { SurveyQuestionModel } from '../models/SurveyQuestionModel';
+import type { SurveyQuestionWriteModel } from '../models/SurveyQuestionWriteModel';
+import type { SurveyWriteModel } from '../models/SurveyWriteModel';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -18,23 +19,18 @@ export class SurveysService {
      * @returns SurveyModelSelectModel Success
      * @throws ApiError
      */
-    public getApiSurveys({
-        version,
+    public getSurveys({
         page = 1,
         size = 10,
         search,
     }: {
-        version: string,
         page?: number,
         size?: number,
         search?: string,
     }): CancelablePromise<SurveyModelSelectModel> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/api/{version}/Surveys',
-            path: {
-                'version': version,
-            },
+            url: '/api/1/surveys',
             query: {
                 'page': page,
                 'size': size,
@@ -47,19 +43,14 @@ export class SurveysService {
      * @returns any Success
      * @throws ApiError
      */
-    public postApiSurveys({
-        version,
+    public createSurvey({
         requestBody,
     }: {
-        version: string,
-        requestBody?: PostSurveyModel,
+        requestBody?: SurveyWriteModel,
     }): CancelablePromise<any> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/api/{version}/Surveys',
-            path: {
-                'version': version,
-            },
+            url: '/api/1/surveys',
             body: requestBody,
             mediaType: 'application/json-patch+json',
         });
@@ -69,19 +60,106 @@ export class SurveysService {
      * @returns SurveyModel Success
      * @throws ApiError
      */
-    public getApiSurveys1({
+    public getSurvey({
         id,
-        version,
     }: {
         id: string,
-        version: string,
     }): CancelablePromise<SurveyModel> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/api/{version}/Surveys/{id}',
+            url: '/api/1/surveys/{id}',
             path: {
                 'id': id,
-                'version': version,
+            },
+        });
+    }
+
+    /**
+     * @returns SurveyModel Success
+     * @throws ApiError
+     */
+    public updateSurvey({
+        id,
+        requestBody,
+    }: {
+        id: string,
+        requestBody?: SurveyWriteModel,
+    }): CancelablePromise<SurveyModel> {
+        return this.httpRequest.request({
+            method: 'PUT',
+            url: '/api/1/surveys/{id}',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json-patch+json',
+        });
+    }
+
+    /**
+     * @returns SurveyQuestionModel Success
+     * @throws ApiError
+     */
+    public createSurveyQuestion({
+        surveyId,
+        requestBody,
+    }: {
+        surveyId: string,
+        requestBody?: SurveyQuestionWriteModel,
+    }): CancelablePromise<SurveyQuestionModel> {
+        return this.httpRequest.request({
+            method: 'POST',
+            url: '/api/1/surveys/{surveyId}/questions',
+            path: {
+                'surveyId': surveyId,
+            },
+            body: requestBody,
+            mediaType: 'application/json-patch+json',
+        });
+    }
+
+    /**
+     * @returns SurveyQuestionModel Success
+     * @throws ApiError
+     */
+    public updateSurveyQuestion({
+        surveyId,
+        questionId,
+        requestBody,
+    }: {
+        surveyId: string,
+        questionId: string,
+        requestBody?: SurveyQuestionWriteModel,
+    }): CancelablePromise<SurveyQuestionModel> {
+        return this.httpRequest.request({
+            method: 'PUT',
+            url: '/api/1/surveys/{surveyId}/questions/{questionId}',
+            path: {
+                'surveyId': surveyId,
+                'questionId': questionId,
+            },
+            body: requestBody,
+            mediaType: 'application/json-patch+json',
+        });
+    }
+
+    /**
+     * @returns any Success
+     * @throws ApiError
+     */
+    public deleteSurveyQuestion({
+        surveyId,
+        questionId,
+    }: {
+        surveyId: string,
+        questionId: string,
+    }): CancelablePromise<any> {
+        return this.httpRequest.request({
+            method: 'DELETE',
+            url: '/api/1/surveys/{surveyId}/questions/{questionId}',
+            path: {
+                'surveyId': surveyId,
+                'questionId': questionId,
             },
         });
     }
@@ -90,24 +168,17 @@ export class SurveysService {
      * @returns any Success
      * @throws ApiError
      */
-    public postApiSurveysQuestions({
+    public getReport({
         surveyId,
-        version,
-        requestBody,
     }: {
-        surveyId: string,
-        version: string,
-        requestBody?: PostQuestionModel,
+        surveyId?: string,
     }): CancelablePromise<any> {
         return this.httpRequest.request({
-            method: 'POST',
-            url: '/api/{version}/Surveys/{surveyId}/Questions',
-            path: {
+            method: 'GET',
+            url: '/api/1/surveys/report',
+            query: {
                 'surveyId': surveyId,
-                'version': version,
             },
-            body: requestBody,
-            mediaType: 'application/json-patch+json',
         });
     }
 

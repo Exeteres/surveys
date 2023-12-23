@@ -5,7 +5,7 @@
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
-export class FilesService {
+export class AccountService {
 
     constructor(public readonly httpRequest: BaseHttpRequest) {}
 
@@ -13,23 +13,17 @@ export class FilesService {
      * @returns any Success
      * @throws ApiError
      */
-    public upload({
-        formData,
+    public getSurveyByEmail({
+        surveyId,
     }: {
-        formData?: {
-            ContentType?: string;
-            ContentDisposition?: string;
-            Headers?: Record<string, Array<string>>;
-            Length?: number;
-            Name?: string;
-            FileName?: string;
-        },
+        surveyId: string,
     }): CancelablePromise<any> {
         return this.httpRequest.request({
-            method: 'POST',
-            url: '/api/1/files/upload',
-            formData: formData,
-            mediaType: 'multipart/form-data',
+            method: 'GET',
+            url: '/api/1/account/{surveyId}/Email',
+            path: {
+                'surveyId': surveyId,
+            },
         });
     }
 

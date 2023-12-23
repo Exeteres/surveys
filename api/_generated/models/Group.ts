@@ -3,13 +3,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { SurveyModel } from './SurveyModel';
+import type { User } from './User';
 
-export type QuestionModel = {
+export type Group = {
     id?: string;
     title?: string | null;
-    type?: string | null;
-    jsonContent?: string | null;
-    survey?: SurveyModel;
+    users?: Array<User> | null;
 };
 

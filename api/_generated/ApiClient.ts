@@ -6,21 +6,25 @@ import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
 import { FetchHttpRequest } from './core/FetchHttpRequest';
 
-import { CompleteService } from './services/CompleteService';
+import { AccountService } from './services/AccountService';
+import { AuthService } from './services/AuthService';
 import { FilesService } from './services/FilesService';
-import { GroupsService } from './services/GroupsService';
 import { SurveysService } from './services/SurveysService';
-import { TokenService } from './services/TokenService';
+import { SurveySessionsService } from './services/SurveySessionsService';
+import { UserGroupsService } from './services/UserGroupsService';
+import { UsersService } from './services/UsersService';
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 
 export class ApiClient {
 
-    public readonly complete: CompleteService;
+    public readonly account: AccountService;
+    public readonly auth: AuthService;
     public readonly files: FilesService;
-    public readonly groups: GroupsService;
     public readonly surveys: SurveysService;
-    public readonly token: TokenService;
+    public readonly surveySessions: SurveySessionsService;
+    public readonly userGroups: UserGroupsService;
+    public readonly users: UsersService;
 
     public readonly request: BaseHttpRequest;
 
@@ -37,11 +41,13 @@ export class ApiClient {
             ENCODE_PATH: config?.ENCODE_PATH,
         });
 
-        this.complete = new CompleteService(this.request);
+        this.account = new AccountService(this.request);
+        this.auth = new AuthService(this.request);
         this.files = new FilesService(this.request);
-        this.groups = new GroupsService(this.request);
         this.surveys = new SurveysService(this.request);
-        this.token = new TokenService(this.request);
+        this.surveySessions = new SurveySessionsService(this.request);
+        this.userGroups = new UserGroupsService(this.request);
+        this.users = new UsersService(this.request);
     }
 }
 

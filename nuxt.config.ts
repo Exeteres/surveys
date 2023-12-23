@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@pinia/nuxt", "vuetify-nuxt-module", "@nuxtjs/i18n"],
+  ssr: false,
+  modules: ["@pinia/nuxt", "vuetify-nuxt-module", "@nuxtjs/i18n", "@pinia-plugin-persistedstate/nuxt"],
   vuetify: {
     vuetifyOptions: {
       theme: {
@@ -12,14 +13,14 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    langDir: "locales",
-    locales: [
-      { code: "en", file: "en.json" },
-      { code: "ru", file: "ru.json" },
-    ],
-    defaultLocale: "ru",
+    vueI18n: "./i18n.config.ts",
   },
-  pinia:{
-
-  }
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: process.env.API_BASE_URL,
+    },
+  },
+  piniaPersistedstate: {
+    storage: "localStorage",
+  },
 })

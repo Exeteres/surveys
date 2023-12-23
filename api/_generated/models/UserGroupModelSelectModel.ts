@@ -3,10 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { UserModel } from './UserModel';
+import type { UserGroupModel } from './UserGroupModel';
 
-export type UserModelSelectModel = {
-    items?: Array<UserModel> | null;
+export type UserGroupModelSelectModel = {
+    items?: Array<UserGroupModel> | null;
     totalCount?: number;
 };
 

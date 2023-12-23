@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type PostQuestionAnswerModel = {
-    text?: string | null;
-};
-
+export enum SurveyQuestionType {
+    SINGLE = 'Single',
+    MULTIPLE = 'Multiple',
+    TEXT = 'Text',
+}

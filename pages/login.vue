@@ -48,18 +48,10 @@
 </template>
 
 <script setup lang="ts">
-import { api } from "~/api"
-
-definePageMeta({
-  layout: "empty",
-})
-
 const username = ref("")
 const password = ref("")
 const error = ref(false)
 const loading = ref(false)
-
-const router = useRouter()
 
 const authStore = useAuthStore()
 
@@ -71,14 +63,7 @@ const login = async () => {
   error.value = false
   loading.value = true
 
-  const success = await authStore.login(username.value, password.value)
-
-  if (success) {
-    await router.push("/")
-  } else {
-    error.value = true
-  }
-
+  await authStore.login(username.value, password.value)
   loading.value = false
 }
 </script>

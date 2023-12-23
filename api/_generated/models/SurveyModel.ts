@@ -4,13 +4,13 @@
 /* eslint-disable */
 
 import type { FileModel } from './FileModel';
-import type { QuestionModel } from './QuestionModel';
+import type { SurveyQuestionModel } from './SurveyQuestionModel';
 
 export type SurveyModel = {
     id?: string;
     title?: string | null;
     jsonContent?: string | null;
     file?: FileModel;
-    questions?: Array<QuestionModel> | null;
+    questions?: Array<SurveyQuestionModel> | null;
 };
 

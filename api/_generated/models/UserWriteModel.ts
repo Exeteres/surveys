@@ -3,9 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type PostSurveyModel = {
-    title: string;
-    jsonContent: string;
-    fileId?: string | null;
+export type UserWriteModel = {
+    userName?: string | null;
+    email?: string | null;
+    password?: string | null;
 };
 

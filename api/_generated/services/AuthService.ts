@@ -8,51 +8,44 @@ import type { TokenModel } from '../models/TokenModel';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
-export class TokenService {
+export class AuthService {
 
     constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * @returns any Success
+     * @returns TokenModel Success
      * @throws ApiError
      */
-    public postApiToken({
-        version,
+    public login({
         requestBody,
     }: {
-        version: string,
         requestBody?: LoginModel,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<TokenModel> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/api/{version}/Token',
-            path: {
-                'version': version,
-            },
+            url: '/api/1/auth/login',
             body: requestBody,
             mediaType: 'application/json-patch+json',
         });
     }
 
     /**
-     * @returns any Success
+     * @returns TokenModel Success
      * @throws ApiError
      */
-    public postApiTokenRefresh({
-        version,
+    public refresh({
         requestBody,
     }: {
-        version: string,
         requestBody?: TokenModel,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<TokenModel> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/api/{version}/Token/Refresh',
-            path: {
-                'version': version,
-            },
+            url: '/api/1/auth/refresh',
             body: requestBody,
             mediaType: 'application/json-patch+json',
+            errors: {
+                401: `Unauthorized`,
+            },
         });
     }
 
